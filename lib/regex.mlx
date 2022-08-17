@@ -1,0 +1,97 @@
+(* https://nickdrane.com/build-your-own-regex/ *)
+
+(* module Syntax : sig *)
+
+(*   (1* Monad *1) *)
+(*   val ( let* ) : 'a t -> ('a -> 'b t ) -> 'b t *)
+
+(*   (1* Applicatives *1) *)
+(*   val ( let+ ) : 'a t -> ('a -> 'b) -> 'b t *)
+(*   val ( and+ ) : 'a t -> 'b t-> ('a * 'b) t *)
+
+(* end *)
+
+
+
+(* utils *)
+let ( let* ) = Option.bind
+
+let get (str : string) (pos : int) : char option =
+  try
+    let ch = String.get str pos in
+    Some ch
+  with
+  | Invalid_argument _ -> None
+
+let slice (str : string) (pos : int) : string =
+  String.sub str pos (String.length str - pos)
+
+(* matcher *)
+let match_one (pattern : char option) (text : char option) : bool =
+  match pattern, text with
+  | _, None -> false
+  | None, _ 
+  | Some '.', _ -> true
+  | _, _ -> pattern = text
+
+let rec match_question (pattern : string) (text : string) : bool =
+  let fst_pattern = get pattern 0 in
+  let fst_text = get text 0 in
+
+  let rest_pattern = slice pattern 2 in
+  let rest_text = slice text 1 in
+
+  (match_one fst_pattern fst_text &&
+    match_str rest_pattern rest_text) ||
+      match_str rest_pattern text
+
+and
+
+match_star (pattern : string) (text : string) : bool =
+  let fst_pattern = get pattern 0 in
+  let fst_text = get text 0 in
+
+  let rest_text = slice text 1 in
+
+  (match_one fst_pattern fst_text && match_str pattern rest_text) || (
+    let rest_pattern = slice pattern 2 in
+    match_str rest_pattern text
+  )
+
+and
+
+match_str (pattern : string) (text : string) : bool =
+  match pattern, text with
+  | "", _ 
+  | "$", "" -> true
+  | _, _ ->
+      match get pattern 1 with
+      | Some '?' ->
+          match_question pattern text
+      | Some '*' ->
+          match_star pattern text
+      | _ ->
+          let fst_pattern = get pattern 0 in
+          let fst_text = get text 0 in
+
+          let rest_pattern = slice pattern 1 in
+          let rest_text = slice text 1 in
+
+          match_one fst_pattern fst_text &&
+            match_str rest_pattern rest_text
+
+let search (pattern : string) (text : string) : bool =
+  match get pattern 0 with
+  | Some '^' ->
+      let rest_pattern = slice pattern 1 in
+
+      match_str rest_pattern text
+  | _ ->
+    let found_match = ref false in
+
+    String.iteri (fun idx _ ->
+      let rest_text = slice text idx in
+      found_match := !found_match || match_str pattern rest_text
+    ) text; 
+
+    !found_match
