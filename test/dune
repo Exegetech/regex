@@ -1,0 +1,3 @@
+(test
+ (name regex_test)
+ (libraries alcotest regex))

@@ -1,0 +1,1 @@
+let search: (~pattern: string, ~text: string) => bool
