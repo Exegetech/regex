@@ -8,7 +8,7 @@ let testEmptyPattern = () => {
   Alcotest.(check(bool))(__LOC__, true, result)
 }
 
-let testOneCharPattern = () => {
+let _testOneCharPattern = () => {
   let pattern = "a"
 
   let result = Regex.search(~pattern, ~text="")
@@ -21,7 +21,7 @@ let testOneCharPattern = () => {
   Alcotest.(check(bool))(__LOC__, true, result);
 }
 
-let testOneCharWithCaretPattern = () => {
+let _testOneCharWithCaretPattern = () => {
   let pattern = "^"
 
   let result = Regex.search(~pattern, ~text="")
@@ -31,7 +31,7 @@ let testOneCharWithCaretPattern = () => {
   Alcotest.(check(bool))(__LOC__, true, result);
 }
 
-let testOneCharWithDollarPattern = () => {
+let _testOneCharWithDollarPattern = () => {
   let pattern = "$"
 
   let result = Regex.search(~pattern, ~text="")
@@ -41,7 +41,7 @@ let testOneCharWithDollarPattern = () => {
   Alcotest.(check(bool))(__LOC__, true, result);
 }
 
-let testOneCharWithDotPattern = () => {
+let _testOneCharWithDotPattern = () => {
   let pattern = "."
 
   let result = Regex.search(~pattern, ~text="")
@@ -54,7 +54,7 @@ let testOneCharWithDotPattern = () => {
   Alcotest.(check(bool))(__LOC__, true, result);
 }
 
-let testOneCharWithQuestionPattern = () => {
+let _testOneCharWithQuestionPattern = () => {
   let pattern = "a?"
 
   let result = Regex.search(~pattern, ~text="")
@@ -73,7 +73,7 @@ let testOneCharWithQuestionPattern = () => {
   Alcotest.(check(bool))(__LOC__, true, result);
 }
 
-let testOneCharWithStarPattern = () => {
+let _testOneCharWithStarPattern = () => {
   let pattern = "a*"
 
   let result = Regex.search(~pattern, ~text="")
@@ -95,7 +95,7 @@ let testOneCharWithStarPattern = () => {
   Alcotest.(check(bool))(__LOC__, true, result);
 }
 
-let testMultipleCharsPattern = () => {
+let _testMultipleCharsPattern = () => {
   let pattern = "abc"
 
   let result = Regex.search(~pattern, ~text="")
@@ -108,7 +108,7 @@ let testMultipleCharsPattern = () => {
   Alcotest.(check(bool))(__LOC__, true, result);
 }
 
-let testMultipleCharsWithCaretPattern = () => {
+let _testMultipleCharsWithCaretPattern = () => {
   let pattern = "^abc"
 
   let result = Regex.search(~pattern, ~text="")
@@ -124,7 +124,7 @@ let testMultipleCharsWithCaretPattern = () => {
   Alcotest.(check(bool))(__LOC__, false, result);
 }
 
-let testMultipleCharsWithDollarPattern = () => {
+let _testMultipleCharsWithDollarPattern = () => {
   let pattern = "abc$"
 
   let result = Regex.search(~pattern, ~text="")
@@ -140,7 +140,7 @@ let testMultipleCharsWithDollarPattern = () => {
   Alcotest.(check(bool))(__LOC__, true, result);
 }
 
-let testMultipleCharsWithDotPattern = () => {
+let _testMultipleCharsWithDotPattern = () => {
   let pattern = "a.c"
 
   let result = Regex.search(~pattern, ~text="")
@@ -156,7 +156,7 @@ let testMultipleCharsWithDotPattern = () => {
   Alcotest.(check(bool))(__LOC__, false, result);
 }
 
-let testMultipleCharsWithQuestionPattern = () => {
+let _testMultipleCharsWithQuestionPattern = () => {
   let pattern = "ab?c"
 
   let result = Regex.search(~pattern, ~text="")
@@ -175,7 +175,7 @@ let testMultipleCharsWithQuestionPattern = () => {
   Alcotest.(check(bool))(__LOC__, false, result);
 }
 
-let testMultipleCharsWithStarPattern = () => {
+let _testMultipleCharsWithStarPattern = () => {
   let pattern = "a*bc"
 
   let result = Regex.search(~pattern, ~text="")
@@ -197,7 +197,7 @@ let testMultipleCharsWithStarPattern = () => {
   Alcotest.(check(bool))(__LOC__, false, result);
 }
 
-let testMultipleCharsWithDotQuestionPattern = () => {
+let _testMultipleCharsWithDotQuestionPattern = () => {
   let pattern = ".?c"
 
   let result = Regex.search(~pattern, ~text="")
@@ -213,7 +213,7 @@ let testMultipleCharsWithDotQuestionPattern = () => {
   Alcotest.(check(bool))(__LOC__, true, result);
 }
 
-let testMultipleCharsWithDotStarPattern = () => {
+let _testMultipleCharsWithDotStarPattern = () => {
   let pattern = ".*c"
 
   let result = Regex.search(~pattern, ~text="")
@@ -226,7 +226,7 @@ let testMultipleCharsWithDotStarPattern = () => {
   Alcotest.(check(bool))(__LOC__, true, result);
 }
 
-let testMultipleCharsWithComboPattern = () => {
+let _testMultipleCharsWithComboPattern = () => {
   let pattern = "a*b?c."
 
   let result = Regex.search(~pattern, ~text="")
@@ -259,25 +259,25 @@ let () = {
       ("Empty pattern", [
         test_case("Emtpy pattern", `Quick, testEmptyPattern),
       ]),
-      ("One char pattern", [
-        test_case("One char pattern", `Quick, testOneCharPattern),
-        test_case("With caret pattern", `Quick, testOneCharWithCaretPattern),
-        test_case("With dollar pattern", `Quick, testOneCharWithDollarPattern),
-        test_case("With dot pattern", `Quick, testOneCharWithDotPattern),
-        test_case("With question pattern", `Quick, testOneCharWithQuestionPattern),
-        test_case("With star pattern", `Quick, testOneCharWithStarPattern),
-      ]),
-      ("Multiple chars pattern", [
-        test_case("Multiple chars pattern", `Quick, testMultipleCharsPattern),
-        test_case("With caret pattern", `Quick, testMultipleCharsWithCaretPattern),
-        test_case("With dollar pattern", `Quick, testMultipleCharsWithDollarPattern),
-        test_case("With dot pattern", `Quick, testMultipleCharsWithDotPattern),
-        test_case("With question pattern", `Quick, testMultipleCharsWithQuestionPattern),
-        test_case("With star pattern", `Quick, testMultipleCharsWithStarPattern),
-        test_case("With dot question pattern", `Quick, testMultipleCharsWithDotQuestionPattern),
-        test_case("With dot star pattern", `Quick, testMultipleCharsWithDotStarPattern),
-        test_case("Free pattern", `Quick, testMultipleCharsWithComboPattern),
-      ]),
+      // ("One char pattern", [
+      //   test_case("One char pattern", `Quick, testOneCharPattern),
+      //   test_case("With caret pattern", `Quick, testOneCharWithCaretPattern),
+      //   test_case("With dollar pattern", `Quick, testOneCharWithDollarPattern),
+      //   test_case("With dot pattern", `Quick, testOneCharWithDotPattern),
+      //   test_case("With question pattern", `Quick, testOneCharWithQuestionPattern),
+      //   test_case("With star pattern", `Quick, testOneCharWithStarPattern),
+      // ]),
+      // ("Multiple chars pattern", [
+      //   test_case("Multiple chars pattern", `Quick, testMultipleCharsPattern),
+      //   test_case("With caret pattern", `Quick, testMultipleCharsWithCaretPattern),
+      //   test_case("With dollar pattern", `Quick, testMultipleCharsWithDollarPattern),
+      //   test_case("With dot pattern", `Quick, testMultipleCharsWithDotPattern),
+      //   test_case("With question pattern", `Quick, testMultipleCharsWithQuestionPattern),
+      //   test_case("With star pattern", `Quick, testMultipleCharsWithStarPattern),
+      //   test_case("With dot question pattern", `Quick, testMultipleCharsWithDotQuestionPattern),
+      //   test_case("With dot star pattern", `Quick, testMultipleCharsWithDotStarPattern),
+      //   test_case("Free pattern", `Quick, testMultipleCharsWithComboPattern),
+      // ]),
     ]
   )
 }

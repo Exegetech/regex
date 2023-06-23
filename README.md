@@ -13,3 +13,9 @@ __Test__
 ```sh
 dune runtest
 ```
+
+__RTop__
+
+```sh
+opam exec -- rtop
+```
